@@ -1,15 +1,30 @@
 ﻿namespace ArchiAndMartyBakery.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
+    using ArchiAndMartyBakery.Data.Models;
     using ArchiAndMartyBakery.Web.ViewModels;
-
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly UserManager<ApplicationUser> userManager;
+
+        public HomeController(UserManager<ApplicationUser> userManager)
         {
+            this.userManager = userManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            if (user != null)
+            {
+                return this.View(user);
+            }
+
             return this.View();
         }
 

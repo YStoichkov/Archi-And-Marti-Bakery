@@ -25,14 +25,38 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Portfolio</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Forum" asp-action="Index">Forum</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Gallery</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Home" asp-action="Privacy">Blog</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="About" asp-action="Index">About</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Contacts" asp-action="Index">Contact</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a></li>
+                     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                     {
+                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Portfolio</a></li>
+                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Forum" asp-action="Index">Forum</a></li>
+                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Gallery</a></li>
+                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Home" asp-action="Privacy">Blog</a></li>
+                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="About" asp-action="Index">About</a></li>
+                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Contacts" asp-action="Index">Contact</a></li>
+                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a></li>
+                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a></li>
+                      <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-controller="Account" asp-action="Manage">Profile</a></li>
+                     }
+                     else
+                     {
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Portfolio</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Forum" asp-action="Index">Forum</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Gallery</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Home" asp-action="Privacy">Blog</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="About" asp-action="Index">About</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="" asp-controller="Contacts" asp-action="Index">Contact</a></li>
+            
+                         @if (!this.User.Identity.IsAuthenticated)
+                             { 
+                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a></li>
+                                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a></li>
+                             }
+                         else
+                            {
+                              <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-controller="Account" asp-action="Manage">Profile</a></li>
+                              <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" asp-area="Identity" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                            }
+                     }
                 </ul>
             </div>
         </div>
@@ -41,6 +65,13 @@
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
             <!-- Masthead Avatar Image-->
+            @*@if (this.User.Identity.IsAuthenticated)
+            {
+                <h1>
+                    <font face="Brush Script MT" size="+4" style="color:darkcyan">Hello @this.User.Identity.Name </font>
+                    <img class="rounded-circle img-fluid" src="~/uploads/@this.Model.ImagePath" alt="Something..." style="width:100px;height:100px" />
+                </h1>
+            }*@
             <img class="masthead-avatar mb-5" src="~/assets/img/kitten-dog-chef-cap-pet-food-logo-illustration-vector-smiling-kitten-dog-chef-cap-as-pet-food-logo-illustration-212070803-removebg-preview (1).png" alt="..." />
             <!-- Masthead Heading-->
             <h1 class="masthead-heading text-uppercase mb-0">@GlobalConstants.SystemName</h1>

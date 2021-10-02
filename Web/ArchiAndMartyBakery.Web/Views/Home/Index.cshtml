@@ -1,4 +1,17 @@
 ﻿@using ArchiAndMartyBakery.Common
-@{
-    this.ViewData["Title"] = "Home Page";
-}
+@{ this.ViewData["Title"] = "Home Page"; }
+
+<div class="container d-flex align-items-center flex-column">
+    @if (this.User.Identity.IsAuthenticated)
+    {
+<h1>
+    <font face="Brush Script MT" size="+4" style="color:darkcyan">Hello @this.User.Identity.Name </font>
+    <img class="rounded-circle img-fluid" src="~/uploads/@this.Model.ImagePath" alt="Something..." style="width:100px;height:100px" />
+</h1> }
+            else
+            {
+                <h1>
+                    <font face="Brush Script MT" size="+4" style="color:darkcyan">Hello guest . Why not<a asp-area="Identity" asp-controller="Account" asp-action="Register"> Register </a>to our site ?</font>
+                </h1>
+            }
+</div>
